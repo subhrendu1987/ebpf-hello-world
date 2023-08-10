@@ -27,6 +27,12 @@ $ sudo ./hello
 For a detailed of the build process and commands used, read the accompanying [post](https://www.sartura.hr/blog/simple-ebpf-core-application/)
 ---------------------------------------------------------------------------------------------
 # Compile and load with bpftool
+## Header creation
+```
+git clone https://github.com/libbpf/libbpf
+cd libbpf/src/
+bpftool btf dump file /sys/kernel/btf/vmlinux format c > vmlinux.h
+```
 ## Compile
 ```
 clang -O2 -target bpf -c hello_world.c -o hello_world.o
