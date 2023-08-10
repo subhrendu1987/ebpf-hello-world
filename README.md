@@ -35,16 +35,16 @@ bpftool btf dump file /sys/kernel/btf/vmlinux format c > vmlinux.h
 ```
 ## Compile
 ```
-clang -O2 -target bpf -c hello_world.c -o hello_world.o
-clang -O2 -emit-llvm -c hello_world.c -o - | llc -march=bpf -filetype=obj -o hello_world.o
+clang -O2 -target bpf -c hello.bpf.c -o hello.bpf.o
+clang -O2 -emit-llvm -c hello.bpf.c -o - | llc -march=bpf -filetype=obj -o hello.bpf.o
 ```
 ## Load with bpftools
 ```
-sudo bpftool prog load hello_world.o /sys/fs/bpf/hello_world
+sudo bpftool prog load hello.bpf.o /sys/fs/bpf/hello_world
 ```
 ## Execute
 ```
-sudo bpftool prog load hello_world.o /sys/fs/bpf/hello_world
+sudo bpftool prog load hello.bpf.o /sys/fs/bpf/hello_world
 ```
 ## Attach to tracepoint `sys_enter_clone`
 ```
