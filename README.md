@@ -24,5 +24,32 @@ $ clang -g -O2 -Wall -I . -c hello.c -o hello.o
 $ clang -Wall -O2 -g hello.o libbpf/build/libbpf.a -lelf -lz -o hello
 $ sudo ./hello
 ```
-
 For a detailed of the build process and commands used, read the accompanying [post](https://www.sartura.hr/blog/simple-ebpf-core-application/)
+---------------------------------------------------------------------------------------------
+# Compile and load with bpftool
+## Compile
+```
+clang -O2 -target bpf -c hello_world.c -o hello_world.o
+clang -O2 -emit-llvm -c hello_world.c -o - | llc -march=bpf -filetype=obj -o hello_world.o
+```
+## Load with bpftools
+```
+sudo bpftool prog load hello_world.o /sys/fs/bpf/hello_world
+```
+## Execute
+```
+sudo bpftool prog load hello_world.o /sys/fs/bpf/hello_world
+```
+## Attach to tracepoint `sys_enter_clone`
+```
+sudo bpftool event enable tracepoint syscalls sys_enter_clone /sys/fs/bpf/hello_world
+```
+## View output
+```
+sudo cat /sys/kernel/debug/tracing/trace_pipe
+```
+## Cleanup
+```
+sudo bpftool event disable tracepoint syscalls sys_enter_clone
+sudo rm /sys/fs/bpf/hello_world
+```
