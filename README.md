@@ -1,3 +1,7 @@
+```
+sudo bpftool prog load hello.bpf.o /sys/fs/bpf/hello_world
+```
+
 # ebpf-hello-world
 
 This repo contains two simple example eBPF applications made to acoompany Sartura's eBPF programming [blog post](https://www.sartura.hr/blog/simple-ebpf-core-application/).
@@ -38,19 +42,16 @@ bpftool btf dump file /sys/kernel/btf/vmlinux format c > vmlinux.h
 clang -O2 -target bpf -c hello.bpf.c -o hello.bpf.o
 clang -O2 -emit-llvm -c hello.bpf.c -o - | llc -march=bpf -filetype=obj -o hello.bpf.o
 ```
-## Load with bpftools
-```
-sudo bpftool prog load hello.bpf.o /sys/fs/bpf/hello_world
-```
 ## Execute
+### Load with bpftools
 ```
 sudo bpftool prog load hello.bpf.o /sys/fs/bpf/hello_world
 ```
-## Attach to tracepoint `sys_enter_clone`
+### Attach to tracepoint `sys_enter_clone`
 ```
 sudo bpftool event enable tracepoint syscalls sys_enter_clone /sys/fs/bpf/hello_world
 ```
-## View output
+### View output
 ```
 sudo cat /sys/kernel/debug/tracing/trace_pipe
 ```
