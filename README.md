@@ -21,11 +21,19 @@ A short version of the build steps is provided here:
 ```
 $ git clone https://github.com/libbpf/libbpf
 $ cd libbpf/src/
+$ make
+$ make install
+```
+
+```
+$ git clone https://github.com/subhrendu1987/ebpf-hello-world
+$ cd ebpf-hello-world/src
 $ bpftool btf dump file /sys/kernel/btf/vmlinux format c > vmlinux.h
 $ clang -g -O2 -target bpf -D__TARGET_ARCH_x86_64 -I . -c hello.bpf.c -o hello.bpf.o
 $ bpftool gen skeleton hello.bpf.o > hello.skel.h
 $ clang -g -O2 -Wall -I . -c hello.c -o hello.o
-$ clang -Wall -O2 -g hello.o libbpf/build/libbpf.a -lelf -lz -o hello
+$ LIBBPF_PATH=$(find <libbpf folder path> -name "libbpf.a")
+$ clang -Wall -O2 -g hello.o $LIBBPF_PATH -lelf -lz -o hello
 $ sudo ./hello
 ```
 For a detailed of the build process and commands used, read the accompanying [post](https://www.sartura.hr/blog/simple-ebpf-core-application/)
