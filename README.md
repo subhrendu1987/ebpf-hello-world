@@ -24,6 +24,7 @@ $ cd libbpf/src/
 $ make
 $ make install
 ```
+Note: **libbpf folder path** refers to the path where libbpf library is downloaded
 
 ```
 $ git clone https://github.com/subhrendu1987/ebpf-hello-world
@@ -32,7 +33,7 @@ $ bpftool btf dump file /sys/kernel/btf/vmlinux format c > vmlinux.h
 $ clang -g -O2 -target bpf -D__TARGET_ARCH_x86_64 -I . -c hello.bpf.c -o hello.bpf.o
 $ bpftool gen skeleton hello.bpf.o > hello.skel.h
 $ clang -g -O2 -Wall -I . -c hello.c -o hello.o
-$ LIBBPF_PATH=$(find <libbpf folder path> -name "libbpf.a")
+$ LIBBPF_PATH=$(find *<libbpf folder path>* -name "libbpf.a")
 $ clang -Wall -O2 -g hello.o $LIBBPF_PATH -lelf -lz -o hello
 $ sudo ./hello
 ```
